@@ -38,7 +38,8 @@ abstract class Filters
     /**
      * Apply the filters.
      *
-     * @param  Builder $builder
+     * @param Builder $builder
+     *
      * @return Builder
      */
     public function apply($builder)

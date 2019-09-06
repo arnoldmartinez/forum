@@ -6,7 +6,6 @@ use App\Thread;
 
 class RepliesController extends Controller
 {
-
     /**
      * Create a new RepliesController instance.
      */
@@ -20,6 +19,7 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store($channelId, Thread $thread)
@@ -27,8 +27,8 @@ class RepliesController extends Controller
         $this->validate(request(), ['body' => 'required']);
 
         $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
+            'body'    => request('body'),
+            'user_id' => auth()->id(),
         ]);
 
         return back();

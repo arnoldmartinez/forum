@@ -9,11 +9,11 @@ trait Favoritable
     /**
      * Determine if the current reply has been favorited.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFavorited()
     {
-        return !!$this->favorites()->where('user_id', auth()->id())->count();
+        return (bool) $this->favorites()->where('user_id', auth()->id())->count();
     }
 
     public function getFavoritesCountAttribute()

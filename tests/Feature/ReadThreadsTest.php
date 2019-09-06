@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class ReadThreadsTest extends TestCase
 {
@@ -45,19 +45,19 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_filter_treads_according_to_a_channel()
+    public function a_user_can_filter_treads_according_to_a_channel()
     {
         $channel = create('App\Channel');
         $threadInChannel = create('App\Thread', ['channel_id' => $channel->id]);
         $threadNotInChannel = create('App\Thread');
 
-        $this->get('/threads/' . $channel->slug)
+        $this->get('/threads/'.$channel->slug)
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
     }
 
     /** @test */
-    function a_user_can_filter_threads_by_any_username()
+    public function a_user_can_filter_threads_by_any_username()
     {
         $this->signIn(create('App\User', ['name' => 'JohnDoe']));
 
@@ -70,7 +70,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_filter_threads_by_popularity()
+    public function a_user_can_filter_threads_by_popularity()
     {
         // Given we have three threads
         // With 2 replies, 3 replies, and 0 replies respectively.
