@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Channel;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 
@@ -116,6 +117,8 @@ class ThreadsController extends Controller
      */
     public function destroy($hannel, Thread $thread)
     {
+        $this->authorize('update', $thread);
+
         $thread->delete();
 
         if (request()->wantsJson()) {
