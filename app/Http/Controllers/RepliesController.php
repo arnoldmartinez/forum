@@ -31,6 +31,7 @@ class RepliesController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return back();
+        return back()
+            ->with('flash', 'Your reply has been left.');
     }
 }
