@@ -24,6 +24,13 @@ class Activity extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Fetch an activity feed for the given user.
+     *
+     * @param $user
+     * @param int $take
+     * @return Activity[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
     public static function feed($user, $take = 50)
     {
         return static::where('user_id', $user->id)
