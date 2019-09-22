@@ -27,9 +27,9 @@ class Activity extends Model
     /**
      * Fetch an activity feed for the given user.
      *
-     * @param $user
-     * @param int $take
-     * @return Activity[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     * @param  $user
+     * @param  int $take
+     * @return \Illuminate\Database\Eloquent\Collection;
      */
     public static function feed($user, $take = 50)
     {

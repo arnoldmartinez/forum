@@ -8,8 +8,6 @@ class Reply extends Model
 {
     use Favoritable, RecordsActivity;
 
-    protected $appends = ['favoritesCount', 'isFavorited'];
-
     /**
      * Don't auto-play mass assigment protection.
      *
@@ -17,7 +15,19 @@ class Reply extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
     protected  $with = ['owner', 'favorites'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['favoritesCount', 'isFavorited'];
 
     /**
      * A reply has an owner.
@@ -39,6 +49,11 @@ class Reply extends Model
         return $this->belongsTo(Thread::class);
     }
 
+    /**
+     * Determine the path to the reply.
+     *
+     * @return string
+     */
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
