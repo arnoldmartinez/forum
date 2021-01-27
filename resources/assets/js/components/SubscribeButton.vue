@@ -11,6 +11,7 @@
         return ['btn', this.active ? 'btn-primary' : 'btn-default'];
       }
     },
+
     methods: {
       subscribe() {
         axios[

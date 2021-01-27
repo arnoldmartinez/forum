@@ -2,42 +2,42 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ThreadWasUpdated extends Notification
 {
-    use Queueable;
-
     /**
-     * @var
+     * The thread that was updated.
+     *
+     * @var \App\Thread
      */
     protected $thread;
 
     /**
-     * @var
+     * The new reply.
+     *
+     * @var \App\Reply
      */
     protected $reply;
 
     /**
      * Create a new notification instance.
      *
-     * @param $thread
-     * @param $reply
+     * @param \App\Thread $thread
+     * @param \App\Reply  $reply
      */
     public function __construct($thread, $reply)
     {
-        //
+        $this->thread = $thread;
+        $this->reply = $reply;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via()
     {
         return ['database'];
     }
@@ -45,13 +45,13 @@ class ThreadWasUpdated extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray()
     {
         return [
-            'message' => 'Temporary placeholder.'
+            'message' => $this->reply->owner->name . ' replied to ' . $this->thread->title,
+            'link' => $this->reply->path()
         ];
     }
 }
