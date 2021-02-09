@@ -26,13 +26,11 @@ class RepliesController extends Controller
      *
      * @param integer $channelId
      * @param Thread $thread
-     * @param Spam $spam
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread, Spam $spam)
+    public function store($channelId, Thread $thread)
     {
-        $this->validate(request(), ['body' => 'required']);
-        $spam->detect(request('body'));
+        $this->validateReply();
 
         $reply = $thread->addReply([
             'body' => request('body'),
@@ -43,13 +41,18 @@ class RepliesController extends Controller
             return $reply->load('owner');
         }
 
-        return back()
-            ->with('flash', 'Your reply has been left.');
+        return back()->with('flash', 'Your reply has been left.');
     }
 
+    /**
+     * @param Reply $reply
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
+
+        $this->validateReply();
 
         $reply->update(request(['body']));
     }
@@ -57,8 +60,9 @@ class RepliesController extends Controller
     /**
      * Delete the given reply.
      *
-     * @param  Reply  $reply
+     * @param Reply $reply
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Reply $reply)
     {
@@ -71,5 +75,12 @@ class RepliesController extends Controller
         }
 
         return back();
+    }
+
+    protected function validateReply()
+    {
+        $this->validate(request(), ['body' => 'required']);
+
+        resolve(Spam::class)->detect(request('body'));
     }
 }
