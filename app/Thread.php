@@ -5,13 +5,12 @@ namespace App;
 use App\Events\ThreadHasNewReply;
 use App\Events\ThreadReceivedNewReply;
 use App\Filters\ThreadFilters;
-use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, RecordsVisits;
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -168,4 +167,5 @@ class Thread extends Model
 
         return $this->updated_at > cache($key);
     }
+
 }
