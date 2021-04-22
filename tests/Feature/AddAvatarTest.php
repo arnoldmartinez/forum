@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\Feature;
-
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
