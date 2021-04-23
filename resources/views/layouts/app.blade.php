@@ -36,6 +36,10 @@
             flex: 1;
         }
 
+        .ml-a {
+            margin-left: auto;
+        }
+
         .mr-1 { margin-right: 1em; }
 
         [v-cloak] { display: none; }
