@@ -64785,8 +64785,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 var user = window.App.user;
 
 module.exports = {
-    updateReply: function updateReply(reply) {
-        return reply.user_id === user.id;
+    owns: function owns(model) {
+        var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
+
+        return model[prop] === user.id;
     }
 };
 
@@ -65652,7 +65654,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/Flash.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/Flash.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Flash.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66165,7 +66167,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/Paginator.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/Paginator.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Paginator.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66329,7 +66331,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/UserNotifications.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/UserNotifications.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] UserNotifications.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66455,7 +66457,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/AvatarForm.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/AvatarForm.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AvatarForm.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66560,7 +66562,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/ImageUpload.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/ImageUpload.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ImageUpload.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66697,7 +66699,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/pages/Thread.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/pages/Thread.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -66762,7 +66764,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/Replies.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/Replies.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Replies.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66866,7 +66868,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/Reply.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/Reply.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Reply.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66945,53 +66947,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['data'],
+  props: ['reply'],
 
-    components: { Favorite: __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default.a },
+  components: { Favorite: __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default.a },
 
-    data: function data() {
-        return {
-            editing: false,
-            id: this.data.id,
-            body: this.data.body,
-            reply: this.data,
-            thread: window.thread
-        };
-    },
+  data: function data() {
+    return {
+      editing: false,
+      id: this.id,
+      body: this.reply.body,
+      isBest: this.reply.isBest
+    };
+  },
 
 
-    computed: {
-        isBest: function isBest() {
-            return this.thread.best_reply_id == this.id;
-        },
-        ago: function ago() {
-            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow() + '...';
-        }
-    },
-
-    methods: {
-        update: function update() {
-            axios.patch('/replies/' + this.data.id, {
-                body: this.body
-            }).catch(function (error) {
-                flash(error.response.data, 'danger');
-            });
-
-            this.editing = false;
-
-            flash('Updated!');
-        },
-        destroy: function destroy() {
-            axios.delete('/replies/' + this.data.id);
-
-            this.$emit('deleted', this.data.id);
-        },
-        markBestReply: function markBestReply() {
-            axios.post('/replies/' + this.data.id + '/best');
-
-            this.thread.best_reply_id = this.id;
-        }
+  computed: {
+    ago: function ago() {
+      return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.reply.created_at).fromNow() + '...';
     }
+  },
+
+  created: function created() {
+    var _this = this;
+
+    window.events.$on('best-reply-selected', function (id) {
+      _this.isBest = id === _this.id;
+    });
+  },
+
+
+  methods: {
+    update: function update() {
+      axios.patch('/replies/' + this.id, {
+        body: this.body
+      }).catch(function (error) {
+        flash(error.response.data, 'danger');
+      });
+
+      this.editing = false;
+
+      flash('Updated!');
+    },
+    destroy: function destroy() {
+      axios.delete('/replies/' + this.id);
+
+      this.$emit('deleted', this.id);
+    },
+    markBestReply: function markBestReply() {
+      axios.post('/replies/' + this.id + '/best');
+
+      this.thread.best_reply_id = this.id;
+    }
+  }
 });
 
 /***/ }),
@@ -67011,7 +67018,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/Favorite.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/Favorite.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Favorite.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67484,9 +67491,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "innerHTML": _vm._s(_vm.body)
     }
-  })]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), (_vm.authorize('owns', _vm.reply) || _vm.authorize('owns', _vm.reply.thread)) ? _c('div', {
     staticClass: "panel-footer level"
-  }, [(_vm.authorize('updateReply', 'reply')) ? _c('div', [_c('button', {
+  }, [(_vm.authorize('owns', 'reply')) ? _c('div', [_c('button', {
     staticClass: "btn btn-xs mr-1",
     on: {
       "click": function($event) {
@@ -67498,18 +67505,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.destroy
     }
-  }, [_vm._v("Delete")])]) : _vm._e(), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.isBest),
-      expression: "! isBest"
-    }],
+  }, [_vm._v("Delete")])]) : _vm._e(), _vm._v(" "), (_vm.authorize('owns', _vm.reply.thread)) ? _c('button', {
     staticClass: "btn btn-xs btn-default ml-a",
     on: {
       "click": _vm.markBestReply
     }
-  }, [_vm._v("Best Reply?")])])])
+  }, [_vm._v("Best Reply?")]) : _vm._e()]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -67536,7 +67537,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/NewReply.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/NewReply.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] NewReply.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -69395,7 +69396,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       key: reply.id
     }, [_c('reply', {
       attrs: {
-        "data": reply
+        "reply": reply
       },
       on: {
         "deleted": function($event) {
@@ -69441,7 +69442,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/arnoldmartinez/code/forum/resources/assets/js/components/SubscribeButton.vue"
+Component.options.__file = "/home/vagrant/code/forum/resources/assets/js/components/SubscribeButton.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SubscribeButton.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -69517,7 +69518,7 @@ if (false) {
 /* 217 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Missing binding /home/vagrant/code/forum/node_modules/node-sass/vendor/linux-x64-83/binding.node\nNode Sass could not find a binding for your current environment: Linux 64-bit with Node.js 14.x\n\nFound bindings for the following environments:\n  - OS X 64-bit with Node.js 10.x\n\nThis usually happens because your environment has changed since running `npm install`.\nRun `npm rebuild node-sass` to download the binding for your current environment.\n    at module.exports (/home/vagrant/code/forum/node_modules/node-sass/lib/binding.js:15:13)\n    at Object.<anonymous> (/home/vagrant/code/forum/node_modules/node-sass/lib/index.js:14:35)\n    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n    at Module.load (internal/modules/cjs/loader.js:928:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:769:14)\n    at Module.require (internal/modules/cjs/loader.js:952:19)\n    at require (internal/modules/cjs/helpers.js:88:18)\n    at Object.<anonymous> (/home/vagrant/code/forum/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n    at Module.load (internal/modules/cjs/loader.js:928:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:769:14)\n    at Module.require (internal/modules/cjs/loader.js:952:19)\n    at require (internal/modules/cjs/helpers.js:88:18)\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:18:17)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:365:2)\n    at /home/vagrant/code/forum/node_modules/webpack/lib/NormalModule.js:195:19\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:172:11\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:32:11)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/home/vagrant/code/forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/vagrant/code/forum/node_modules/loader-runner/lib/LoaderRunner.js:365:2)\n    at NormalModule.doBuild (/home/vagrant/code/forum/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/vagrant/code/forum/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/vagrant/code/forum/node_modules/webpack/lib/Compilation.js:157:10)\n    at /home/vagrant/code/forum/node_modules/webpack/lib/Compilation.js:460:10\n    at /home/vagrant/code/forum/node_modules/webpack/lib/NormalModuleFactory.js:243:5\n    at /home/vagrant/code/forum/node_modules/webpack/lib/NormalModuleFactory.js:94:13\n    at /home/vagrant/code/forum/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.<anonymous> (/home/vagrant/code/forum/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/home/vagrant/code/forum/node_modules/tapable/lib/Tapable.js:272:13)\n    at /home/vagrant/code/forum/node_modules/webpack/lib/NormalModuleFactory.js:69:10\n    at /home/vagrant/code/forum/node_modules/webpack/lib/NormalModuleFactory.js:196:7\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
 
 /***/ })
 /******/ ]);
