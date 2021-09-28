@@ -69,6 +69,19 @@ class User extends Authenticatable
         $this->save();
     }
 
+    /**
+     * Determine if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return in_array($this->name, ['JohnDoe', 'JaneDoe']);
+    }
+
+    /**
+     * Record that the user has read the given thread.
+     */
     public function read($thread)
     {
         // Simulate that the user visited the thread.
@@ -78,11 +91,23 @@ class User extends Authenticatable
         );
     }
 
+    /**
+     * Get the path to the user's avatar.
+     *
+     * @param  string $avatar
+     * @return string
+     */
     public function getAvatarPathAttribute($avatar)
     {
         return asset($avatar ?: 'images/avatars/default.png');
     }
 
+    /**
+     * Get the cache key for when a user reads a thread.
+     *
+     * @param  Thread $thread
+     * @return string
+     */
     public function visitedThreadCacheKey($thread)
     {
         return sprintf("users.%s.visits.%s", $this->id, $thread->id);
